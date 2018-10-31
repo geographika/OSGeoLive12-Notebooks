@@ -1,2 +1,2 @@
-mapserver-bin
+libmapserver2
 python-mapscript

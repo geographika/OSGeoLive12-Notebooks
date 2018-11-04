@@ -3,6 +3,9 @@ FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip python python-pip mapserver-bin python-mapscript
 
+# see https://github.com/pypa/pip/issues/5221#issuecomment-381568428
+RUN hash -d pip
+
 # install the notebook package
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook

@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends u
 # install the notebook package
 # and see https://github.com/pypa/pip/issues/5599
 RUN python -m pip install --no-cache --upgrade pip && \
+	python -m pip install --no-cache --upgrade setuptools && \
     python -m pip install --no-cache notebook
 
 # create user with a home directory

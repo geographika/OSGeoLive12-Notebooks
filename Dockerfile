@@ -1,7 +1,7 @@
 #FROM python:2.7-slim
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip python python-pip mapserver-bin python-mapscript
+RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip wget python python-pip mapserver-bin python-mapscript
 
 # install the notebook package
 # and see https://github.com/pypa/pip/issues/5599

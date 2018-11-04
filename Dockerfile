@@ -24,5 +24,5 @@ WORKDIR ${HOME}
 RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \
 	unzip master.zip
 
-RUN https://github.com/mapserver/mapserver-demo/archive/master.zip && \
+RUN wget https://github.com/mapserver/mapserver-demo/archive/master.zip && \
 	unzip master.zip

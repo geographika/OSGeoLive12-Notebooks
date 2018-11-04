@@ -22,7 +22,9 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 
 RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \
-	unzip master.zip
+	unzip master.zip && \
+	rm master.zip
 
 RUN wget https://github.com/mapserver/mapserver-demo/archive/master.zip && \
-	unzip master.zip
+	unzip master.zip && \
+	rm master.zip

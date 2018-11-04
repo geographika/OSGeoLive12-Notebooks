@@ -1,9 +1,11 @@
-FROM python:2.7-slim
+#FROM python:2.7-slim
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip python mapserver-bin python-mapscript
+
 # install the notebook package
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook
-
-RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends mapserver-bin python-mapscript
 
 # create user with a home directory
 ARG NB_USER
@@ -16,3 +18,9 @@ RUN adduser --disabled-password \
     --uid ${NB_UID} \
     ${NB_USER}
 WORKDIR ${HOME}
+
+RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \
+	unzip master.zip
+
+RUN https://github.com/mapserver/mapserver-demo/archive/master.zip && \
+	unzip master.zip

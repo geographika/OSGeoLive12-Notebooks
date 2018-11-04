@@ -14,6 +14,7 @@ ARG NB_USER
 ARG NB_UID
 ENV USER ${NB_USER}
 ENV HOME /home/${NB_USER}
+WORKDIR ${HOME}
 
 RUN adduser --disabled-password \
     --gecos "Default user" \

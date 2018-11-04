@@ -3,7 +3,7 @@ FROM python:2.7-slim
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook
 
-RUN apt-get update && apt-get install -y mapserver-bin python-mapscript
+RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends mapserver-bin python-mapscript
 
 # create user with a home directory
 ARG NB_USER

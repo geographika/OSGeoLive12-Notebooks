@@ -4,10 +4,9 @@ FROM ubuntu:18.04
 RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip python python-pip mapserver-bin python-mapscript
 
 # install the notebook package
-# and see https://github.com/pypa/pip/issues/5221#issuecomment-381568428
-RUN hash -r pip && \
-    pip install --no-cache --upgrade pip && \
-    pip install --no-cache notebook
+# and see https://github.com/pypa/pip/issues/5599
+RUN python -m pip install --no-cache --upgrade pip && \
+    python -m pip install --no-cache notebook
 
 # create user with a home directory
 ARG NB_USER

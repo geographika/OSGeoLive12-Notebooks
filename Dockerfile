@@ -19,12 +19,18 @@ RUN adduser --disabled-password \
     --gecos "Default user" \
     --uid ${NB_UID} \
     ${NB_USER}
-WORKDIR ${HOME}
 
 RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \
 	unzip master.zip && \
+	mv OSGeoLive12-Notebooks-master OSGeoLive12-Notebooks && \
 	rm master.zip
 
 RUN wget https://github.com/mapserver/mapserver-demo/archive/master.zip && \
 	unzip master.zip && \
+	mv mapserver-demo-master mapserver-demo && \	
 	rm master.zip
+	
+# set a path to the mapserver demo
+ENV MAPSERVER_DEMO /home/${NB_USER}/mapserver-demo
+
+WORKDIR ${HOME}/OSGeoLive12-Notebooks

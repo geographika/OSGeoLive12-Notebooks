@@ -10,16 +10,32 @@ RUN python -m pip install --no-cache --upgrade pip && \
     python -m pip install --no-cache notebook
 
 # create user with a home directory
-ARG NB_USER
-ARG NB_UID
-ENV USER ${NB_USER}
+
+ENV NB_USER jovyan
+ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
-WORKDIR ${HOME}
 
 RUN adduser --disabled-password \
     --gecos "Default user" \
     --uid ${NB_UID} \
     ${NB_USER}
+
+# Make sure the contents of our repo are in ${HOME}
+# COPY . ${HOME}
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
+
+#ARG NB_USER
+#ARG NB_UID
+#ENV USER ${NB_USER}
+#ENV HOME /home/${NB_USER}
+#WORKDIR ${HOME}
+
+#RUN adduser --disabled-password \
+#    --gecos "Default user" \
+#    --uid ${NB_UID} \
+#    ${NB_USER}
 
 # add the notebooks
 RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \

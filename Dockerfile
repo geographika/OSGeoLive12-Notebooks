@@ -1,12 +1,12 @@
-#FROM python:2.7-slim
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip wget python python-pip mapserver-bin python-mapscript
+RUN apt-get update && apt-get install -y --fix-missing --no-install-recommends unzip wget \
+    python python-pip mapserver-bin python-mapscript
 
 # install the notebook package
 # and see https://github.com/pypa/pip/issues/5599
 RUN python -m pip install --no-cache --upgrade pip && \
-	python -m pip install --no-cache --upgrade setuptools && \
+    python -m pip install --no-cache --upgrade setuptools && \
     python -m pip install --no-cache notebook
 
 # create user with a home directory
@@ -21,17 +21,19 @@ RUN adduser --disabled-password \
     --uid ${NB_UID} \
     ${NB_USER}
 
+# add the notebooks
 RUN wget https://github.com/geographika/OSGeoLive12-Notebooks/archive/master.zip && \
-	unzip master.zip && \
-	mv OSGeoLive12-Notebooks-master OSGeoLive12-Notebooks && \
-	rm master.zip
+    unzip master.zip && \
+    mv OSGeoLive12-Notebooks-master OSGeoLive12-Notebooks && \
+    rm master.zip
 
+# add the MapServer demo
 RUN wget https://github.com/mapserver/mapserver-demo/archive/master.zip && \
-	unzip master.zip && \
-	mv mapserver-demo-master mapserver-demo && \	
-	rm master.zip
-	
-# set a path to the mapserver demo
+    unzip master.zip && \
+    mv mapserver-demo-master mapserver-demo && \	
+    rm master.zip
+
+# set a path to the MapServer demo
 ENV MAPSERVER_DEMO /home/${NB_USER}/mapserver-demo
 
 WORKDIR ${HOME}/OSGeoLive12-Notebooks

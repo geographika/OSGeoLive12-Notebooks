@@ -1,3 +1,28 @@
+# ---
+# jupyter:
+#   jupytext:
+#     formats: ipynb,pct.py:percent,lgt.py:light,spx.py:sphinx,md,Rmd
+#     text_representation:
+#       extension: .pct.py
+#       format_name: percent
+#       format_version: '1.1'
+#       jupytext_version: 0.8.0
+#   kernelspec:
+#     display_name: Python 2
+#     language: python
+#     name: python2
+#   language_info:
+#     codemirror_mode:
+#       name: ipython
+#       version: 3
+#     file_extension: .py
+#     mimetype: text/x-python
+#     name: python
+#     nbconvert_exporter: python
+#     pygments_lexer: ipython3
+#     version: 3.6.6
+# ---
+
 # %% [markdown]
 # # MapScript Quick Start
 # 
@@ -7,15 +32,22 @@
 #
 # ## Mapfiles
 # The simplest way to use MapScript is to work with an existing [Mapfile](https://mapserver.org/mapfile/). 
-# A new ```mapObj``` can be created by passing the path to to a Mapfile. We will 
-# be working with the Itasca demo map that is also used in the MapServer quick start. 
+# A new ```mapObj``` can be created by passing the path to a Mapfile. We will 
+# be working with the Itasca demo map that is also used in the 
+# [MapServer Demo](http://localhost/mapserver_demos/itasca/) on OSGeoLive. 
 
 # %%
+import sys
+sys.path.append("/rofs/usr/lib/python2.7/dist-packages") # temporary hack for OSGeoLive
+
+import os
 import mapscript
 from IPython.display import Image
 
-pth = "itasca.map"
-map = mapscript.mapObj(pth)
+demo_fld = os.getenv("MAPSERVER_DEMO")
+mapfile = os.path.join(demo_fld, "itasca.map")
+
+map = mapscript.mapObj(mapfile)
 
 # %% [markdown]
 # Anything found in the Mapfile can be accessed and manipulated using MapScript. 
@@ -35,6 +67,10 @@ for idx in range(0, map.numlayers):
 # returns an imageObj which can be saved to a filename on disk. 
 
 # %%
+import tempfile
+# before creating images let's set the working directory to the temp folder
+os.chdir(tempfile.gettempdir()) 
+
 output_file = "map.png"
 image = map.draw()
 image.save(output_file)
@@ -133,6 +169,7 @@ print(props)
 
 # %% [markdown]
 # We can also create a map showing the query results: 
+# *Note the imageObj is broken for Python MapScript 7.0, but is fixed in 7.2*
 
 # %%
 # create a new 400 by 400 empty image
